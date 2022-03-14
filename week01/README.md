@@ -14,6 +14,7 @@ supports MP3, CD and vinyl collection formats
     - how many times this track was listened to for all time
     - how many times have you listened to songs from this album
     - how many times have you listened to the songs of this artist
+
 Collaborators:
 * Anastasiia Baranova - [a.baranova@innopolis.university]
 * Aleksandr Lobanov - [a.lobanov@innopolis.university]
