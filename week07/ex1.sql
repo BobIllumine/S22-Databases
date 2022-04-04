@@ -74,8 +74,12 @@ insert into NormalizedPurchase(orderId, customerId, itemId, quantity)
 -- Subtask 1
 
 -- Getting number of elements in orders
-select count(distinct (orderId))
-from NormalizedOrders;
+select orderId, count(*) as amount
+from NormalizedOrders
+    natural join NormalizedPurchase
+    natural join NormalizedCustomers
+    natural join NormalizedItems
+group by orderId;
 -- Getting total cost
 select customerName, sum(price * quantity) as cost
 from NormalizedOrders
