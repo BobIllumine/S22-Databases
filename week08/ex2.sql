@@ -10,6 +10,6 @@ order by fid;
 
 
 
-explain analyse select * from sales_by_store;
+select * from sales_by_store;
 -- the most expensive step - join of inventory and store tables in the view
 -- already sped up by hash joining
