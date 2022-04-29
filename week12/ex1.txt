@@ -1,4 +1,5 @@
 Create(kn:Fighter {name: 'Khabib Nurmagomedov', weight: '155'}), (rda:Fighter {name: 'Rafael Dos Anjos', weight: '155'}), (nm:Fighter {name: 'Neil Magny', weight: '170'}),(jj:Fighter {name: 'Jon Jones', weight: '205'}), (dc:Fighter {name: 'Daniel Cormier', weight: '205'}),(mb:Fighter {name: 'Michael Bisping', weight: '185'}),(mh:Fighter {name: 'Matt Hamill', weight: '185'}),(bv:Fighter {name: 'Brandon Vera', weight: '205'}),(fm:Fighter {name: 'Frank Mir', weight: '230'}),(bl:Fighter {name: 'Brock Lesnar', weight: '230'}),(kg:Fighter {name: 'Kelvin Gastelum', weight: '185'})
+
 (kn)-[:beats]->(rda)
 (rda)-[:beats]->(nm)
 (jj)-[:beats]->(dc)
@@ -11,3 +12,35 @@ Create(kn:Fighter {name: 'Khabib Nurmagomedov', weight: '155'}), (rda:Fighter {n
 (mb)-[:beats]->(mh)
 (mb)-[:beats]->(kg)
 (mh)-[:beats]->(jj)
+
+//  Task 1
+
+MATCH (n:Fighter)-[:beats]->(:Fighter)
+WHERE n.weight IN ['155', '170', '185']
+RETURN n
+
+// Task 2
+
+MATCH (i:Fighter)-[:beats]->(j:Fighter)
+WHERE exists((i)<-[:beats]-(j))
+RETURN i,j
+
+// Task 3
+
+MATCH (kn:Fighter{name:'Khabib Nurmagomedov'})-[:beats]->(some_guy:Fighter)
+MATCH (some_guy)-[:beats]->(another_guy:Fighter)
+RETURN another_guy
+
+// Task 4
+
+MATCH (winners:Fighter) WHERE NOT exists((winners)<-[:beats]-(:Fighter))
+MATCH (losers:Fighter) WHERE NOT exists((losers)-[:beats]->(:Fighter))
+RETURN winners, losers
+
+// Task 5
+
+MATCH (n:Fighter)-[:beats]->(m:Fighter)
+MATCH (n:Fighter)<-[:beats]-(k:Fighter)
+WITH *, count(m) AS wins, count(k) AS loses
+SET n.record = [wins, loses]
+RETURN n, wins, loses
